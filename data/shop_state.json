@@ -1,0 +1,143 @@
+{
+  "entries" : [ {
+    "itemId" : 1,
+    "basePrice" : 300,
+    "referenceSupply" : 100,
+    "currentSupply" : 95,
+    "buybackPrice" : 153,
+    "currentPrice" : 307
+  }, {
+    "itemId" : 2,
+    "basePrice" : 500,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 250,
+    "currentPrice" : 500
+  }, {
+    "itemId" : 3,
+    "basePrice" : 15000,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 7500,
+    "currentPrice" : 15000
+  }, {
+    "itemId" : 4,
+    "basePrice" : 3500,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 1750,
+    "currentPrice" : 3500
+  }, {
+    "itemId" : 5,
+    "basePrice" : 12000,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 6000,
+    "currentPrice" : 12000
+  }, {
+    "itemId" : 101,
+    "basePrice" : 800,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 400,
+    "currentPrice" : 800
+  }, {
+    "itemId" : 6,
+    "basePrice" : 22000,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 11000,
+    "currentPrice" : 22000
+  }, {
+    "itemId" : 102,
+    "basePrice" : 8000,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 4000,
+    "currentPrice" : 8000
+  }, {
+    "itemId" : 7,
+    "basePrice" : 55000,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 27500,
+    "currentPrice" : 55000
+  }, {
+    "itemId" : 103,
+    "basePrice" : 25000,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 12500,
+    "currentPrice" : 25000
+  }, {
+    "itemId" : 8,
+    "basePrice" : 200,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 100,
+    "currentPrice" : 200
+  }, {
+    "itemId" : 104,
+    "basePrice" : 80000,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 40000,
+    "currentPrice" : 80000
+  }, {
+    "itemId" : 201,
+    "basePrice" : 900,
+    "referenceSupply" : 100,
+    "currentSupply" : 60,
+    "buybackPrice" : 580,
+    "currentPrice" : 1161
+  }, {
+    "itemId" : 202,
+    "basePrice" : 200,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 100,
+    "currentPrice" : 200
+  }, {
+    "itemId" : 203,
+    "basePrice" : 80,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 40,
+    "currentPrice" : 80
+  }, {
+    "itemId" : 204,
+    "basePrice" : 350,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 175,
+    "currentPrice" : 350
+  }, {
+    "itemId" : 205,
+    "basePrice" : 150,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 75,
+    "currentPrice" : 150
+  }, {
+    "itemId" : 206,
+    "basePrice" : 1200,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 600,
+    "currentPrice" : 1200
+  }, {
+    "itemId" : 207,
+    "basePrice" : 5000,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 2500,
+    "currentPrice" : 5000
+  }, {
+    "itemId" : 208,
+    "basePrice" : 250,
+    "referenceSupply" : 100,
+    "currentSupply" : 100,
+    "buybackPrice" : 125,
+    "currentPrice" : 250
+  } ]
+}

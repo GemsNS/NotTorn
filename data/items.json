@@ -1,0 +1,27 @@
+{
+  "items": [
+
+    { "type": "WEAPON", "id": 1,  "name": "Wooden Bat",      "description": "A battered piece of timber.",       "rarity": "COMMON",       "basePrice": 300,    "baseDamage": 30,  "accuracy": 0.80, "weaponCategory": "MELEE" },
+    { "type": "WEAPON", "id": 2,  "name": "Kitchen Knife",   "description": "Household blade. Surprisingly deadly.", "rarity": "COMMON",    "basePrice": 500,    "baseDamage": 45,  "accuracy": 0.85, "weaponCategory": "MELEE" },
+    { "type": "WEAPON", "id": 3,  "name": "Katana",          "description": "Razor-sharp imported blade.",         "rarity": "RARE",         "basePrice": 15000,  "baseDamage": 90,  "accuracy": 0.90, "weaponCategory": "MELEE" },
+    { "type": "WEAPON", "id": 4,  "name": "Pistol",          "description": "Standard 9mm sidearm.",               "rarity": "UNCOMMON",     "basePrice": 3500,   "baseDamage": 65,  "accuracy": 0.75, "weaponCategory": "SECONDARY" },
+    { "type": "WEAPON", "id": 5,  "name": "Shotgun",         "description": "High-damage close-range scatter.",    "rarity": "RARE",         "basePrice": 12000,  "baseDamage": 130, "accuracy": 0.65, "weaponCategory": "PRIMARY" },
+    { "type": "WEAPON", "id": 6,  "name": "Assault Rifle",   "description": "Military-grade automatic weapon.",    "rarity": "RARE",         "basePrice": 22000,  "baseDamage": 155, "accuracy": 0.80, "weaponCategory": "PRIMARY" },
+    { "type": "WEAPON", "id": 7,  "name": "Sniper Rifle",    "description": "Extreme range, extreme damage.",       "rarity": "VERY_RARE",    "basePrice": 55000,  "baseDamage": 210, "accuracy": 0.95, "weaponCategory": "PRIMARY" },
+    { "type": "WEAPON", "id": 8,  "name": "Crowbar",         "description": "Heavy steel utility bar.",             "rarity": "COMMON",       "basePrice": 200,    "baseDamage": 35,  "accuracy": 0.78, "weaponCategory": "MELEE" },
+
+    { "type": "ARMOR",  "id": 101, "name": "Leather Vest",    "description": "Light protection, good mobility.",   "rarity": "COMMON",       "basePrice": 800,    "armorRating": 0.08 },
+    { "type": "ARMOR",  "id": 102, "name": "Kevlar Vest",     "description": "Anti-ballistic torso protection.",   "rarity": "UNCOMMON",     "basePrice": 8000,   "armorRating": 0.20 },
+    { "type": "ARMOR",  "id": 103, "name": "Bulletproof Vest","description": "Heavy-duty law enforcement grade.",   "rarity": "RARE",         "basePrice": 25000,  "armorRating": 0.35 },
+    { "type": "ARMOR",  "id": 104, "name": "Military Armour", "description": "Full tactical plate carrier.",        "rarity": "VERY_RARE",    "basePrice": 80000,  "armorRating": 0.50 },
+
+    { "type": "CONSUMABLE", "id": 201, "name": "Xanax",          "description": "+250 Energy. Hard cap 1,000.",       "rarity": "RARE",         "basePrice": 900,    "effect": "RESTORE_ENERGY",    "effectValue": 250 },
+    { "type": "CONSUMABLE", "id": 202, "name": "LSD",             "description": "+50 Energy.",                        "rarity": "UNCOMMON",     "basePrice": 200,    "effect": "RESTORE_ENERGY",    "effectValue": 50  },
+    { "type": "CONSUMABLE", "id": 203, "name": "Candy",           "description": "+500 Happiness.",                    "rarity": "COMMON",       "basePrice": 80,     "effect": "RESTORE_HAPPINESS", "effectValue": 500  },
+    { "type": "CONSUMABLE", "id": 204, "name": "Erotic DVD",      "description": "+1,000 Happiness.",                  "rarity": "UNCOMMON",     "basePrice": 350,    "effect": "RESTORE_HAPPINESS", "effectValue": 1000 },
+    { "type": "CONSUMABLE", "id": 205, "name": "First Aid Kit",   "description": "Restore 200 HP.",                    "rarity": "COMMON",       "basePrice": 150,    "effect": "RESTORE_HP",        "effectValue": 200  },
+    { "type": "CONSUMABLE", "id": 206, "name": "Morphine",        "description": "Restore 500 HP. Hospital demand.",   "rarity": "RARE",         "basePrice": 1200,   "effect": "RESTORE_HP",        "effectValue": 500  },
+    { "type": "CONSUMABLE", "id": 207, "name": "Blood Bag",       "description": "Full HP restoration.",               "rarity": "VERY_RARE",    "basePrice": 5000,   "effect": "RESTORE_HP",        "effectValue": 1000 },
+    { "type": "CONSUMABLE", "id": 208, "name": "Vicodin",         "description": "+100 Energy.",                       "rarity": "UNCOMMON",     "basePrice": 250,    "effect": "RESTORE_ENERGY",    "effectValue": 100  }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "missions": [
+    {
+      "id": "m01",
+      "title": "Getting Started",
+      "giverNpcId": "george",
+      "dialogue": "George: 'Hey, fresh meat! Welcome to the city. First thing you should do — go check out the Gym. Build those stats up or you won't last a week.'",
+      "objectiveDescription": "Visit the Gym",
+      "objectiveType": "VISIT_LOCATION",
+      "objectiveTarget": "GYM",
+      "rewardFiat": 500,
+      "completionDialogue": "George: 'You actually went! Here, take these few bucks. Don\\'t spend it all on drugs.'"
+    },
+    {
+      "id": "m02",
+      "title": "Know the Market",
+      "giverNpcId": "george",
+      "dialogue": "George: 'The Market is where the real economy happens. Buy weapons, sell loot. Go have a look — knowledge is power.'",
+      "objectiveDescription": "Visit the Item Market",
+      "objectiveType": "VISIT_LOCATION",
+      "objectiveTarget": "MARKET",
+      "rewardFiat": 1000,
+      "completionDialogue": "George: 'See? Prices move. Buy low, sell high. Simple.'"
+    },
+    {
+      "id": "m03",
+      "title": "Down the Alley",
+      "giverNpcId": "george",
+      "dialogue": "George: 'The Dark Alley is where crimes go down. Don\\'t go unarmed. Go see what\\'s lurking there — just don\\'t do anything stupid.'",
+      "objectiveDescription": "Visit the Dark Alley",
+      "objectiveType": "VISIT_LOCATION",
+      "objectiveTarget": "ALLEY",
+      "rewardFiat": 1500,
+      "completionDialogue": "George: 'Impressive. You\\'re braver than you look. Or just dumber.'"
+    },
+    {
+      "id": "m04",
+      "title": "Know Your Exits",
+      "giverNpcId": "george",
+      "dialogue": "George: 'You\\'ll end up in the Hospital sooner or later — everyone does. Go find it before you need it urgently.'",
+      "objectiveDescription": "Visit the Hospital",
+      "objectiveType": "VISIT_LOCATION",
+      "objectiveTarget": "HOSPITAL",
+      "rewardFiat": 500,
+      "completionDialogue": "George: 'Good. Now you know where to drag yourself after a fight.'"
+    },
+    {
+      "id": "m05",
+      "title": "Secure the Bag",
+      "giverNpcId": "george",
+      "dialogue": "George: 'One last tip: always bank your cash. If you\\'re carrying it and someone mugs you, it\\'s gone. Get to the Bank.'",
+      "objectiveDescription": "Visit the Bank",
+      "objectiveType": "VISIT_LOCATION",
+      "objectiveTarget": "BANK",
+      "rewardFiat": 2000,
+      "completionDialogue": "George: 'Smart. That\\'s the last lesson I\\'ve got for you. You\\'re on your own now, kid. Good luck.'"
+    }
+  ]
+}

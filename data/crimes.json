@@ -1,0 +1,94 @@
+{
+  "crimes": [
+    {
+      "id": "shoplift",
+      "name": "Shoplifting",
+      "nerveCost": 1,
+      "baseSuccessRate": 0.95,
+      "minReward": 50,    "maxReward": 200,
+      "ceGain": 5,        "cePenalty": 2,
+      "minJailSeconds": 0, "maxJailSeconds": 120
+    },
+    {
+      "id": "graffiti",
+      "name": "Graffiti",
+      "nerveCost": 2,
+      "baseSuccessRate": 0.90,
+      "minReward": 100,   "maxReward": 500,
+      "ceGain": 8,        "cePenalty": 4,
+      "minJailSeconds": 0, "maxJailSeconds": 180
+    },
+    {
+      "id": "pickpocket",
+      "name": "Pickpocket",
+      "nerveCost": 3,
+      "baseSuccessRate": 0.80,
+      "minReward": 250,   "maxReward": 900,
+      "ceGain": 12,       "cePenalty": 6,
+      "minJailSeconds": 60, "maxJailSeconds": 300
+    },
+    {
+      "id": "mugging",
+      "name": "Mugging",
+      "nerveCost": 5,
+      "baseSuccessRate": 0.70,
+      "minReward": 600,   "maxReward": 2500,
+      "ceGain": 20,       "cePenalty": 10,
+      "minJailSeconds": 120, "maxJailSeconds": 600
+    },
+    {
+      "id": "car_theft",
+      "name": "Car Theft",
+      "nerveCost": 6,
+      "baseSuccessRate": 0.65,
+      "minReward": 900,   "maxReward": 3500,
+      "ceGain": 25,       "cePenalty": 12,
+      "minJailSeconds": 180, "maxJailSeconds": 900
+    },
+    {
+      "id": "burglary",
+      "name": "Burglary",
+      "nerveCost": 8,
+      "baseSuccessRate": 0.55,
+      "minReward": 1500,  "maxReward": 6500,
+      "ceGain": 35,       "cePenalty": 17,
+      "minJailSeconds": 300, "maxJailSeconds": 1200
+    },
+    {
+      "id": "hustling",
+      "name": "Hustling",
+      "nerveCost": 10,
+      "baseSuccessRate": 0.50,
+      "minReward": 2200,  "maxReward": 9000,
+      "ceGain": 45,       "cePenalty": 22,
+      "minJailSeconds": 300, "maxJailSeconds": 1800
+    },
+    {
+      "id": "forgery",
+      "name": "Forgery",
+      "nerveCost": 12,
+      "baseSuccessRate": 0.45,
+      "minReward": 3500,  "maxReward": 13000,
+      "ceGain": 55,       "cePenalty": 27,
+      "minJailSeconds": 600, "maxJailSeconds": 2400
+    },
+    {
+      "id": "bootlegging",
+      "name": "Bootlegging",
+      "nerveCost": 15,
+      "baseSuccessRate": 0.38,
+      "minReward": 5500,  "maxReward": 22000,
+      "ceGain": 70,       "cePenalty": 35,
+      "minJailSeconds": 900, "maxJailSeconds": 3600
+    },
+    {
+      "id": "kidnapping",
+      "name": "Kidnapping",
+      "nerveCost": 20,
+      "baseSuccessRate": 0.25,
+      "minReward": 12000, "maxReward": 55000,
+      "ceGain": 100,      "cePenalty": 50,
+      "minJailSeconds": 1800, "maxJailSeconds": 7200
+    }
+  ]
+}

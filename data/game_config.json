@@ -1,0 +1,62 @@
+{
+  "energyRegenIntervalSeconds": 900,
+  "energyRegenIntervalDonatorSeconds": 600,
+  "energyRegenAmount": 5,
+  "naturalMaxEnergy": 100,
+  "donatorMaxEnergy": 150,
+  "absoluteMaxEnergy": 1000,
+
+  "nerveRegenIntervalSeconds": 300,
+  "nerveRegenAmount": 1,
+
+  "absoluteMaxHappiness": 99999,
+  "happinessTruncationIntervalMinutes": 15,
+
+  "nnbThresholds": [
+    { "ceRequired": 0,     "nnb": 10 },
+    { "ceRequired": 100,   "nnb": 15 },
+    { "ceRequired": 300,   "nnb": 20 },
+    { "ceRequired": 600,   "nnb": 25 },
+    { "ceRequired": 1000,  "nnb": 30 },
+    { "ceRequired": 1500,  "nnb": 35 },
+    { "ceRequired": 2500,  "nnb": 40 },
+    { "ceRequired": 4000,  "nnb": 45 },
+    { "ceRequired": 6000,  "nnb": 50 },
+    { "ceRequired": 9000,  "nnb": 55 },
+    { "ceRequired": 13000, "nnb": 60 }
+  ],
+
+  "properties": [
+    { "tier": "STARTER",        "baseCost": 0,          "baseHappiness": 50   },
+    { "tier": "CHALET",         "baseCost": 1654000,    "baseHappiness": 725  },
+    { "tier": "VILLA",          "baseCost": 2404000,    "baseHappiness": 800  },
+    { "tier": "PENTHOUSE",      "baseCost": 3538000,    "baseHappiness": 1150 },
+    { "tier": "MANSION",        "baseCost": 5038000,    "baseHappiness": 1725 },
+    { "tier": "RANCH",          "baseCost": 23288000,   "baseHappiness": 1925 },
+    { "tier": "PALACE",         "baseCost": 313038000,  "baseHappiness": 2550 },
+    { "tier": "CASTLE",         "baseCost": 532788000,  "baseHappiness": 3475 },
+    { "tier": "PRIVATE_ISLAND", "baseCost": 940788000,  "baseHappiness": 4500 }
+  ],
+
+  "shop": {
+    "priceElasticity": 0.5,
+    "minPriceRatio": 0.20,
+    "maxPriceRatio": 5.00,
+    "defaultReferenceSupply": 100,
+    "salesTaxRate": 0.05,
+    "anonymousTaxRate": 0.10
+  },
+
+  "combat": {
+    "maxTurns": 25,
+    "baseCritChance": 0.12,
+    "attackEnergyCost": 25,
+    "baseUnarmedDamage": 50,
+    "basePlayerHitPoints": 1000,
+    "hitChanceFloorRatio": 64,
+    "damageFloorRatio": 32,
+    "damageCeilingRatio": 14,
+    "meritBonusPerLevel": 0.03,
+    "maxMeritLevel": 10
+  }
+}

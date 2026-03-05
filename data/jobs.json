@@ -1,0 +1,44 @@
+{
+  "careers": [
+    {
+      "id": "ARMY",
+      "name": "Army",
+      "ranks": [
+        { "title": "Private",        "reqManual":     2, "reqIntel":    2, "reqEndurance":    2,  "gainManual":  3, "gainIntel":  1, "gainEndurance":  2,  "dailyIncome":   125, "jobSpecial": "Strength boost for army points" },
+        { "title": "Corporal",       "reqManual":    50, "reqIntel":   15, "reqEndurance":   20,  "gainManual":  5, "gainIntel":  2, "gainEndurance":  3,  "dailyIncome":   150, "jobSpecial": "" },
+        { "title": "Sergeant",       "reqManual":   120, "reqIntel":   35, "reqEndurance":   50,  "gainManual":  8, "gainIntel":  3, "gainEndurance":  5,  "dailyIncome":   180, "jobSpecial": "Steal weapon for 10 points" },
+        { "title": "Warrant Officer","reqManual":   700, "reqIntel":  160, "reqEndurance":  300,  "gainManual": 17, "gainIntel":  7, "gainEndurance": 10,  "dailyIncome":   225, "jobSpecial": "" },
+        { "title": "Major",          "reqManual":  2550, "reqIntel":  490, "reqEndurance":  900,  "gainManual": 24, "gainIntel": 10, "gainEndurance": 13,  "dailyIncome":   550, "jobSpecial": "" },
+        { "title": "General",        "reqManual": 10000, "reqIntel": 2000, "reqEndurance": 4000,  "gainManual": 40, "gainIntel": 25, "gainEndurance": 20,  "dailyIncome":  2500, "jobSpecial": "Spy player stats for 10 points" }
+      ]
+    },
+    {
+      "id": "MEDICAL",
+      "name": "Medical",
+      "ranks": [
+        { "title": "Medical Student", "reqManual":    0, "reqIntel":   300, "reqEndurance":     0, "gainManual":  4, "gainIntel": 12, "gainEndurance":  7,  "dailyIncome":   400, "jobSpecial": "" },
+        { "title": "Houseman",        "reqManual":  100, "reqIntel":   600, "reqEndurance":   150, "gainManual":  7, "gainIntel": 17, "gainEndurance": 10,  "dailyIncome":   600, "jobSpecial": "Steal small aid kit for 2 points" },
+        { "title": "GP",              "reqManual":  300, "reqIntel":  1500, "reqEndurance":   500, "gainManual": 10, "gainIntel": 24, "gainEndurance": 13,  "dailyIncome":  1500, "jobSpecial": "Steal morphine for 7 points" },
+        { "title": "Brain Surgeon",   "reqManual": 2600, "reqIntel": 10000, "reqEndurance":  4000, "gainManual": 20, "gainIntel": 40, "gainEndurance": 25,  "dailyIncome":  7000, "jobSpecial": "Revive player (Passive skill)" }
+      ]
+    },
+    {
+      "id": "EDUCATION",
+      "name": "Education",
+      "ranks": [
+        { "title": "Recess Supervisor",  "reqManual":    0, "reqIntel":  500, "reqEndurance":    0, "gainManual":  8, "gainIntel": 10, "gainEndurance":  9,  "dailyIncome":   300, "jobSpecial": "+100 Manual per 10 points" },
+        { "title": "Secondary Teacher",  "reqManual": 1000, "reqIntel": 1300, "reqEndurance": 1000, "gainManual": 20, "gainIntel": 25, "gainEndurance": 20,  "dailyIncome":   850, "jobSpecial": "" },
+        { "title": "Principal",          "reqManual": 1500, "reqIntel": 5000, "reqEndurance": 1500, "gainManual": 30, "gainIntel": 40, "gainEndurance": 30,  "dailyIncome":  3250, "jobSpecial": "-10% education time (Passive)" }
+      ]
+    },
+    {
+      "id": "LAW",
+      "name": "Law",
+      "ranks": [
+        { "title": "Law Student",    "reqManual":    0, "reqIntel":    0, "reqEndurance":  1500, "gainManual": 15, "gainIntel": 15, "gainEndurance": 20,  "dailyIncome":   150, "jobSpecial": "Gain 3 nerve for 5 points" },
+        { "title": "Trial Lawyer",   "reqManual": 3500, "reqIntel": 6500, "reqEndurance":  7750, "gainManual": 25, "gainIntel": 27, "gainEndurance": 35,  "dailyIncome":  1500, "jobSpecial": "Bust from jail for 15 points" },
+        { "title": "Federal Judge",  "reqManual": 6000, "reqIntel": 9000, "reqEndurance": 15000, "gainManual": 30, "gainIntel": 33, "gainEndurance": 45,  "dailyIncome":  5000, "jobSpecial": "+5% crime exp (Passive)" }
+      ]
+    }
+  ]
+}

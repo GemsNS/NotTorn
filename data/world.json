@@ -1,0 +1,52 @@
+{
+  "locations": [
+    {
+      "id": "CITY_CENTER",
+      "name": "City Center",
+      "description": "The hub of Torn City. George loiters by the fountain.",
+      "connectedTo": ["GYM", "HOSPITAL", "MARKET", "ALLEY", "BANK"]
+    },
+    {
+      "id": "GYM",
+      "name": "Gym",
+      "description": "Train your Strength, Defense, Speed, and Dexterity here.",
+      "connectedTo": ["CITY_CENTER", "DRUG_STORE"]
+    },
+    {
+      "id": "HOSPITAL",
+      "name": "Hospital",
+      "description": "Recover HP and revive fallen players. Morphine sold here.",
+      "connectedTo": ["CITY_CENTER", "DRUG_STORE"]
+    },
+    {
+      "id": "DRUG_STORE",
+      "name": "Drug Store",
+      "description": "Consumables, medical items, and the odd stimulant.",
+      "connectedTo": ["GYM", "HOSPITAL", "MARKET"]
+    },
+    {
+      "id": "MARKET",
+      "name": "Item Market",
+      "description": "Buy and sell weapons, armor, and goods. Prices shift with supply.",
+      "connectedTo": ["CITY_CENTER", "DRUG_STORE", "ALLEY"]
+    },
+    {
+      "id": "ALLEY",
+      "name": "Dark Alley",
+      "description": "A narrow backstreet. Street thugs patrol here. Crimes happen here.",
+      "connectedTo": ["CITY_CENTER", "MARKET", "POLICE_STATION"]
+    },
+    {
+      "id": "POLICE_STATION",
+      "name": "Police Station",
+      "description": "Officers patrol the entrance. Busting jailed players done here.",
+      "connectedTo": ["ALLEY", "CITY_CENTER"]
+    },
+    {
+      "id": "BANK",
+      "name": "Bank",
+      "description": "Deposit cash to protect it from mugging. Investment accounts available.",
+      "connectedTo": ["CITY_CENTER"]
+    }
+  ]
+}

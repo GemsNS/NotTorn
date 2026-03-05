@@ -1,0 +1,15 @@
+{
+  "destinations": [
+    { "id": "MEXICO",        "name": "Mexico",          "flightTimeMinutes": 26,  "ticketCost":  6500, "description": "Close and cheap. Flowers and plushies at decent margins." },
+    { "id": "CAYMAN",        "name": "Cayman Islands",  "flightTimeMinutes": 35,  "ticketCost": 10000, "description": "Offshore banking. Hide cash from muggers." },
+    { "id": "CANADA",        "name": "Canada",          "flightTimeMinutes": 41,  "ticketCost":  9000, "description": "Stable supply of mid-tier goods." },
+    { "id": "HAWAII",        "name": "Hawaii",          "flightTimeMinutes": 134, "ticketCost": 11000, "description": "Rare flowers and vacation plushies." },
+    { "id": "UK",            "name": "United Kingdom",  "flightTimeMinutes": 159, "ticketCost": 18000, "description": "Premium melee weapons at import prices." },
+    { "id": "ARGENTINA",     "name": "Argentina",       "flightTimeMinutes": 167, "ticketCost": 21000, "description": "Drug supplies at below-market rates." },
+    { "id": "SWITZERLAND",   "name": "Switzerland",     "flightTimeMinutes": 175, "ticketCost": 27000, "description": "High-end armor at controlled prices." },
+    { "id": "JAPAN",         "name": "Japan",           "flightTimeMinutes": 225, "ticketCost": 32000, "description": "Rare collectibles and tech items." },
+    { "id": "CHINA",         "name": "China",           "flightTimeMinutes": 242, "ticketCost": 35000, "description": "Electronics and specialty ammunition." },
+    { "id": "UAE",           "name": "UAE",             "flightTimeMinutes": 271, "ticketCost": 32000, "description": "Luxury goods and exotic plushies." },
+    { "id": "SOUTH_AFRICA",  "name": "South Africa",    "flightTimeMinutes": 297, "ticketCost": 40000, "description": "Hunting permits and rare animal trophies." }
+  ]
+}
