@@ -14,6 +14,7 @@
 
 ## Table of Contents
 
+- [Screenshots](#screenshots)
 - [Game Features](#game-features)
 - [Technical Overview](#technical-overview)
 - [Mathematics & Weights](#mathematics--weights)
@@ -21,6 +22,17 @@
 - [Getting Started](#getting-started)
 - [Controls](#controls)
 - [Roadmap / TODO](#roadmap--todo)
+
+---
+
+## Screenshots
+
+| | |
+|:---:|:---:|
+| ![Main UI — city overview and stats panel](https://i.imgur.com/v7j3JDr.png) | ![Crime menu](https://i.imgur.com/pbKQyFs.png) |
+| **Main UI — city overview and stats panel** | **Crime menu** |
+| ![Combat / turn-based fight](https://i.imgur.com/lPT2pDT.png) | ![City map panel](https://i.imgur.com/VlqIGtz.png) |
+| **Combat — turn-based fight** | **City map panel** |
 
 ---
 
