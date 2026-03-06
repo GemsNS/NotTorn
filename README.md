@@ -8,7 +8,7 @@
 ---
 
 **Joel — Student at NSCC**
-[gemsns.github.io](https://gemsns.github.io) &nbsp;·&nbsp; [github.com/gemsns](https://github.com/gemsns) [Torn User: novascotia [3983589]](https://www.torn.com/profiles.php?XID=3983589)
+[gemsns.github.io](https://gemsns.github.io) &nbsp;·&nbsp; [github.com/gemsns](https://github.com/gemsns) &nbsp;·&nbsp;  [Torn User: novascotia [3983589]](https://www.torn.com/profiles.php?XID=3983589)
 
 ---
 
