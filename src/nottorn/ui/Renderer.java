@@ -213,7 +213,20 @@ public class Renderer {
     // ── Main render entry ────────────────────────────────────────────────────
 
     public void render(Screen screen) throws Exception {
-        screen.clear();
+        // On Linux, the OS delivers SIGWINCH when the terminal is resized.
+        // Lanterna queues that event but does not apply it until
+        // doResizeIfNecessary() is called.  Without this call,
+        // screen.getTerminalSize() returns stale dimensions, the virtual buffers
+        // remain the wrong size, and any area outside the old frame is never
+        // written — leaving a frozen strip of old content after a resize.
+        // When a resize is detected we use COMPLETE for that one frame so every
+        // cell at the new size is pushed out, clearing any stale content.  Normal
+        // frames continue to use DELTA (incremental diff, no blank flash).
+        boolean resized = (screen.doResizeIfNecessary() != null);
+        Screen.RefreshType refreshType = resized
+                ? Screen.RefreshType.COMPLETE
+                : Screen.RefreshType.DELTA;
+
         TextGraphics g    = screen.newTextGraphics();
         TerminalSize size  = screen.getTerminalSize();
         int W = size.getColumns();
@@ -223,7 +236,7 @@ public class Renderer {
 
         if (activePanel != PanelType.NONE) {
             drawFullPanel(g, W, H);
-            screen.refresh();
+            screen.refresh(refreshType);
             return;
         }
 
@@ -236,7 +249,7 @@ public class Renderer {
         drawSectionDivider(g, W, H - 2);
         drawStatusBar(g, W, H);
 
-        screen.refresh();
+        screen.refresh(refreshType);
     }
 
     // ────────────────────────────────────────────────────────────────────────

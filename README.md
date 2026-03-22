@@ -39,62 +39,96 @@
 
 ## Bug Fixes
 
-### Mar 2026 — Flickering & Mexico Stuck (v0.6.1)
-
-Two bugs were reported by players after cloning the repository and running the game for the first time.
+### Mar 2026 — Flickering, Mexico Stuck & Terminal Resize (v0.6.1 → v0.6.2)
 
 ---
 
-#### Bug 1 — Screen flickering
+#### Bug 1 — Screen flickering (all platforms)
 
 **Symptom:** The terminal window flickered constantly during normal gameplay.
 
 **Root cause:** `render()` was called on every iteration of the game loop with only
-`Thread.sleep(1)` between iterations. That produced up to ~1,000 `screen.refresh()`
-calls per second. The Swing AWT paint thread cannot keep up with that volume of
-repaint requests, so it draws partial frames — the visible flicker.
+`Thread.sleep(1)` between iterations — up to ~1,000 `screen.refresh()` calls per
+second. The Swing AWT paint thread on Windows, and the ANSI escape-code writer on
+Linux, cannot keep up with that volume and draw partial frames.
 
-**Fix (`GameEngine.java`):** Added a `RENDER_INTERVAL_NS` constant capped at **60 fps**
-(one frame every ~16.67 ms) and a `lastRenderNs` timestamp. `render()` is now only
-called when a full frame interval has elapsed since the last draw. Logic updates and
-input handling continue to run at full speed on the existing 60 Hz fixed-timestep loop
-— the render cap is independent of the update rate.
-
----
-
-#### Bug 2 — All players start in Mexico and cannot travel home
-
-**Symptom:** On a fresh clone, the game started with the player already in Mexico.
-Pressing `R` (return home) printed *"Cannot travel while in jail"* and did nothing.
-
-**Root cause — two issues stacked on each other:**
-
-1. **`data/savegame.json` was committed to the repository.** That development save had
-   `"currentLocationId": "MEXICO"` baked in. Every new clone inherited this file and
-   loaded it instead of creating a fresh save, dropping players straight into Mexico.
-
-2. **The committed save also had an expired jail timestamp.**
-   `"jailReleaseTimestamp": 1772732929573` does not expire until March 2027.
-   `isInJail()` therefore returns `true`, and `returnHome()` refuses to start a return
-   flight before it ever checks whether the player is abroad — so pressing `R`
-   silently failed every time.
-
-**Fix:**
-- `data/savegame.json` deleted. The game already creates a fresh `Player` with
-  `currentLocationId = "CITY_CENTER"` when no save file exists, so a missing file
-  is the correct default state.
-- `.gitignore` added so `data/savegame.json` and `data/shop_state.json` can never be
-  accidentally committed again.
+**Fix (`GameEngine.java`):** Added `RENDER_INTERVAL_NS` (60 fps cap) and a
+`lastRenderNs` timestamp. `render()` only fires when a full frame interval has
+elapsed. Logic updates and input handling are unaffected — they still run on the
+existing 60 Hz fixed-timestep independently of the render cap.
 
 ---
 
-#### Additional hardening (same session)
+#### Bug 2 — Flickering persisted after the 60 fps cap (all platforms)
+
+**Symptom:** Flickering continued even after the render-rate cap, on all platforms.
+Most visible on GPU-accelerated terminal emulators (Alacritty, Kitty, WezTerm, foot)
+but present on Windows and standard Linux terminals too.
+
+**Root cause:** `screen.clear()` was called at the top of every render pass. This
+marks the entire back buffer as dirty, causing `RefreshType.AUTOMATIC` to choose a
+full repaint on every frame — the mechanism differs by platform but the result is the
+same:
+
+- **Linux / macOS (ANSI terminals):** Lanterna sends `\033[2J` (erase-display) to the
+  terminal before writing the new frame. The screen blanks instantly while content is
+  drawn cell-by-cell — that gap is the visible flash.
+- **Windows (Swing terminal):** The full-dirty back buffer causes Lanterna to repaint
+  every cell in the Swing component every frame, flooding the AWT Event Dispatch Thread
+  with redundant work and producing the same tearing effect.
+
+The 60 fps cap reduced how *often* the flash occurred but could not remove it because
+the cause was in the render call itself, not just the call frequency.
+
+**Fix (`Renderer.java`):**
+- Removed `screen.clear()`. `fillBackground()` already writes a space with the
+  background colour to every cell, so the visual result is identical — there is no
+  intermediate blank or dirty state for the platform to act on.
+- Both `screen.refresh()` calls changed to `Screen.RefreshType.DELTA`. This locks
+  Lanterna into incremental diff mode on every platform: only cells whose character
+  or colour actually changed since the last frame are updated. On a typical idle frame
+  (only timer digits changed) that is a handful of characters instead of 4,800.
+
+> **Note — synchronized output mode:** For GPU-accelerated terminals on Linux the
+> ideal further fix is wrapping each refresh in DEC private mode 2026
+> (`\033[?2026h` … `\033[?2026l`), which instructs the GPU compositor to hold
+> rendering until the end marker arrives. All major GPU-accelerated Linux terminals
+> support this. It requires writing raw escape codes to Lanterna's internal output
+> stream, which is not exposed through the `Screen` or `Terminal` interfaces in
+> version 3.1.2 and is left as a future improvement.
+
+---
+
+#### Bug 3 — Window resize does not redraw the game (all platforms)
+
+**Symptom:** Resizing the terminal window left the game frozen at the old size.
+Content outside the original frame boundary was not cleared or redrawn.
+
+**Root cause:** Lanterna queues resize events internally — via `SIGWINCH` on
+Linux/macOS, and via Swing component events on Windows — but does not apply them
+until `screen.doResizeIfNecessary()` is explicitly called. Without that call,
+`screen.getTerminalSize()` returns stale dimensions, Lanterna's virtual front/back
+buffers remain the wrong size, and any area outside the old frame is never written
+to — leaving frozen content after a resize. This affects every platform.
+
+**Fix (`Renderer.java`):** `screen.doResizeIfNecessary()` is called at the top of
+every render pass. If it returns non-null (a resize occurred), the refresh type for
+that frame switches to `Screen.RefreshType.COMPLETE`, pushing every cell at the new
+dimensions out to the terminal and clearing any stale content. All subsequent frames
+return to `DELTA`. The one-frame `COMPLETE` flash during an active resize is expected
+behaviour and imperceptible in practice.
+
+---
+
+#### Additional hardening
 
 | Change | File | Reason |
 |---|---|---|
-| Travel menu prepends *"Return to Torn City"* when abroad | `GameEngine.java` | Players did not know about the undiscoverable `R` hotkey; the menu now makes the return option explicit |
-| Corrupt `IN_FLIGHT + traveling=false` state healed on load | `Main.java` | A crash mid-flight left the player permanently stuck on the IN_FLIGHT screen because `checkArrival()` requires `traveling=true` to fire |
-| Arrival message tells the player how to return | `TravelService.java` | Foreign arrival now reads *"Press [T] or [R] to book your return flight"* instead of a generic explore message; home arrival gives a distinct *"Welcome home!"* message |
+| `data/savegame.json` deleted | — | Committed dev save had `currentLocationId: MEXICO` and a jail timestamp expiring 2027; every fresh clone inherited it and started broken |
+| `.gitignore` added | `.gitignore` | Prevents `savegame.json` and `shop_state.json` from being committed again |
+| Travel menu prepends *"Return to Torn City"* when abroad | `GameEngine.java` | Players could not discover the `R` shortcut; the menu now makes the return path explicit |
+| Corrupt `IN_FLIGHT + traveling=false` state healed on load | `Main.java` | A mid-flight crash left players permanently stuck on the IN_FLIGHT screen — `checkArrival()` requires `traveling=true` to fire |
+| Arrival message explains how to return | `TravelService.java` | Foreign arrival now reads *"Press [T] or [R] to book your return flight"*; home arrival gives a distinct *"Welcome home!"* |
 
 ---
 
