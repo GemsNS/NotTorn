@@ -1,0 +1,7 @@
+# Generated save files — never commit player state
+data/savegame.json
+data/shop_state.json
+
+# Compiled output
+bin/
+*.class

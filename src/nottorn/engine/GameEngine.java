@@ -40,6 +40,9 @@ public class GameEngine {
     /** 60 logical updates per second. */
     private static final long UPDATE_RATE_NS = 1_000_000_000L / 60;
 
+    /** Render at 60 fps to avoid terminal flicker from excessive screen.refresh() calls. */
+    private static final long RENDER_INTERVAL_NS = 1_000_000_000L / 60;
+
     /** Auto-save interval in real seconds. */
     private static final double AUTO_SAVE_INTERVAL_S = 60.0;
 
@@ -57,6 +60,7 @@ public class GameEngine {
 
     private volatile boolean running = false;
     private double autoSaveAccumulator = 0.0;
+    private long   lastRenderNs        = 0L;
 
     // ────────────────────────────────────────────────────────────────────────
 
@@ -102,7 +106,13 @@ public class GameEngine {
                 lag -= UPDATE_RATE_NS;
             }
 
-            render();
+            // Cap renders at 30 fps — avoids bombarding the terminal emulator
+            // with screen.refresh() calls that it cannot paint fast enough,
+            // which is the primary cause of visible flicker.
+            if (currentTime - lastRenderNs >= RENDER_INTERVAL_NS) {
+                render();
+                lastRenderNs = currentTime;
+            }
 
             try {
                 Thread.sleep(1);
@@ -195,6 +205,9 @@ public class GameEngine {
 
     private void openTravelMenu() {
         List<String> items = new ArrayList<>();
+        if (services.travelService.isAbroad(player)) {
+            items.add(">> Return to Torn City (free return flight)");
+        }
         for (Destination d : services.travelCatalog.allDestinations()) {
             items.add(d.menuLine());
         }
@@ -265,10 +278,18 @@ public class GameEngine {
                 renderer.closeMenu();
             }
             case TRAVEL -> {
-                Destination dest = services.travelCatalog.get(sel);
-                if (dest != null) {
-                    String result = services.travelService.depart(player, dest.id, System.currentTimeMillis());
-                    renderer.addMessage(result);
+                boolean abroad = services.travelService.isAbroad(player);
+                if (abroad && sel == 0) {
+                    // First item is the return-home option when the player is abroad
+                    renderer.addMessage(services.travelService.returnHome(player, System.currentTimeMillis()));
+                } else {
+                    // Adjust index: skip the prepended return-home item if abroad
+                    int destIndex = abroad ? sel - 1 : sel;
+                    Destination dest = services.travelCatalog.get(destIndex);
+                    if (dest != null) {
+                        String result = services.travelService.depart(player, dest.id, System.currentTimeMillis());
+                        renderer.addMessage(result);
+                    }
                 }
                 renderer.closeMenu();
             }

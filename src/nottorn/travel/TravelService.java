@@ -75,7 +75,11 @@ public class TravelService {
         player.setTravelDestinationId(null);
         player.setCurrentLocationId(destId);
 
-        return "[Travel] Arrived in " + destName + "! Explore and return home when ready.";
+        boolean returningHome = HOME_LOCATION.equals(destId);
+        if (returningHome) {
+            return "[Travel] Landed back in Torn City. Welcome home!";
+        }
+        return "[Travel] Arrived in " + destName + "!  Press [T] or [R] to book your return flight.";
     }
 
     /** Starts the return journey back to Torn City. */

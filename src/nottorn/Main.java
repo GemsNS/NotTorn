@@ -84,6 +84,14 @@ public class Main {
             System.out.println("[OFFLINE JOB] " + m);
         }
 
+        // Heal corrupt save: IN_FLIGHT with traveling=false means the game crashed
+        // mid-flight.  checkArrival() never fires for this state, so the player
+        // would be permanently stuck on the IN_FLIGHT screen.  Reset to CITY_CENTER.
+        if ("IN_FLIGHT".equals(player.getCurrentLocationId()) && !player.isTraveling()) {
+            player.setTravelDestinationId(null);
+            player.setCurrentLocationId("CITY_CENTER");
+        }
+
         // Ensure new players start at CITY_CENTER and mark it visited
         if (player.getCurrentLocationId() == null) {
             player.setCurrentLocationId("CITY_CENTER");

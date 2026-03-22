@@ -15,6 +15,7 @@
 ## Table of Contents
 
 - [Screenshots](#screenshots)
+- [Bug Fixes](#bug-fixes)
 - [Game Features](#game-features)
 - [Technical Overview](#technical-overview)
 - [Mathematics & Weights](#mathematics--weights)
@@ -33,6 +34,67 @@
 | **Main UI — city overview and stats panel** | **Crime menu** |
 | ![Combat / turn-based fight](https://i.imgur.com/lPT2pDT.png) | ![City map panel](https://i.imgur.com/VlqIGtz.png) |
 | **Combat — turn-based fight** | **City map panel** |
+
+---
+
+## Bug Fixes
+
+### Mar 2026 — Flickering & Mexico Stuck (v0.6.1)
+
+Two bugs were reported by players after cloning the repository and running the game for the first time.
+
+---
+
+#### Bug 1 — Screen flickering
+
+**Symptom:** The terminal window flickered constantly during normal gameplay.
+
+**Root cause:** `render()` was called on every iteration of the game loop with only
+`Thread.sleep(1)` between iterations. That produced up to ~1,000 `screen.refresh()`
+calls per second. The Swing AWT paint thread cannot keep up with that volume of
+repaint requests, so it draws partial frames — the visible flicker.
+
+**Fix (`GameEngine.java`):** Added a `RENDER_INTERVAL_NS` constant capped at **60 fps**
+(one frame every ~16.67 ms) and a `lastRenderNs` timestamp. `render()` is now only
+called when a full frame interval has elapsed since the last draw. Logic updates and
+input handling continue to run at full speed on the existing 60 Hz fixed-timestep loop
+— the render cap is independent of the update rate.
+
+---
+
+#### Bug 2 — All players start in Mexico and cannot travel home
+
+**Symptom:** On a fresh clone, the game started with the player already in Mexico.
+Pressing `R` (return home) printed *"Cannot travel while in jail"* and did nothing.
+
+**Root cause — two issues stacked on each other:**
+
+1. **`data/savegame.json` was committed to the repository.** That development save had
+   `"currentLocationId": "MEXICO"` baked in. Every new clone inherited this file and
+   loaded it instead of creating a fresh save, dropping players straight into Mexico.
+
+2. **The committed save also had an expired jail timestamp.**
+   `"jailReleaseTimestamp": 1772732929573` does not expire until March 2027.
+   `isInJail()` therefore returns `true`, and `returnHome()` refuses to start a return
+   flight before it ever checks whether the player is abroad — so pressing `R`
+   silently failed every time.
+
+**Fix:**
+- `data/savegame.json` deleted. The game already creates a fresh `Player` with
+  `currentLocationId = "CITY_CENTER"` when no save file exists, so a missing file
+  is the correct default state.
+- `.gitignore` added so `data/savegame.json` and `data/shop_state.json` can never be
+  accidentally committed again.
+
+---
+
+#### Additional hardening (same session)
+
+| Change | File | Reason |
+|---|---|---|
+| Travel menu prepends *"Return to Torn City"* when abroad | `GameEngine.java` | Players did not know about the undiscoverable `R` hotkey; the menu now makes the return option explicit |
+| Corrupt `IN_FLIGHT + traveling=false` state healed on load | `Main.java` | A crash mid-flight left the player permanently stuck on the IN_FLIGHT screen because `checkArrival()` requires `traveling=true` to fire |
+| Arrival message tells the player how to return | `TravelService.java` | Foreign arrival now reads *"Press [T] or [R] to book your return flight"* instead of a generic explore message; home arrival gives a distinct *"Welcome home!"* message |
 
 ---
 
@@ -228,12 +290,15 @@ while (running) {
 
     handleInput()
 
-    while (lag >= UPDATE_RATE_NS) {   // 16.67 ms per tick
-        update(deltaSeconds)           // regen, NPC FSMs, travel, job ticks
+    while (lag >= UPDATE_RATE_NS) {        // 16.67 ms per tick
+        update(deltaSeconds)               // regen, NPC FSMs, travel, job ticks
         lag -= UPDATE_RATE_NS
     }
 
-    render()     // Lanterna screen refresh
+    if (now - lastRenderNs >= RENDER_INTERVAL_NS) {   // 60 fps cap
+        render()                                       // Lanterna screen refresh
+        lastRenderNs = now
+    }
 }
 ```
 
@@ -404,8 +469,8 @@ All balancing lives in plain JSON. No recompile needed to tweak values.
 | `data/jobs.json` | 4 career paths with rank requirements and daily gains |
 | `data/crimes.json` | 10 crime definitions with nerve costs and reward ranges |
 | `data/destinations.json` | 11 travel destinations with exact flight times |
-| `data/savegame.json` | *(generated)* Player save state |
-| `data/shop_state.json` | *(generated)* Live shop supply levels |
+| `data/savegame.json` | *(generated — gitignored)* Player save; created automatically on first run |
+| `data/shop_state.json` | *(generated — gitignored)* Live shop supply levels; created automatically on first run |
 
 ---
 
@@ -455,8 +520,8 @@ Progress saves automatically every 60 seconds and on exit to `data/savegame.json
 | `G` | Talk to George (tutorial missions) |
 | `C` | Crime menu |
 | `J` | Job enrollment / resign menu |
-| `T` | Travel departure menu |
-| `R` | Return home from abroad |
+| `T` | Travel menu — shows outbound destinations, or *"Return to Torn City"* as option 1 when abroad |
+| `R` | Shortcut: start return flight home from abroad |
 | `B` | Buy from Item Market |
 | `S` | Sell items from inventory |
 | `I` | Inventory panel |
