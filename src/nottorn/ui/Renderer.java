@@ -552,13 +552,26 @@ public class Renderer {
         // ── Event messages ─────────────────────────────────────────────────────
         if (row < H - 4) {
             row = drawSectionHeader(g, rc, row, "[ MESSAGES ]");
+
+            // Word-wrap every stored message into display lines, tracking which
+            // display lines belong to the most-recent message for colour purposes.
             String[] msgs = messageLog.toArray(new String[0]);
-            int start = Math.max(0, msgs.length - (H - 5 - row));
-            for (int i = start; i < msgs.length && row < H - 4; i++) {
-                boolean isLatest = (i == msgs.length - 1);
-                g.setForegroundColor(isLatest ? COL_MSG : COL_MSG_DIM);
+            List<String>  displayLines  = new ArrayList<>();
+            List<Boolean> lineIsLatest  = new ArrayList<>();
+            for (int i = 0; i < msgs.length; i++) {
+                boolean latest = (i == msgs.length - 1);
+                for (String line : wordWrap(msgs[i], rw)) {
+                    displayLines.add(line);
+                    lineIsLatest.add(latest);
+                }
+            }
+
+            int available  = H - 4 - row;
+            int startLine  = Math.max(0, displayLines.size() - available);
+            for (int i = startLine; i < displayLines.size() && row < H - 4; i++) {
+                g.setForegroundColor(lineIsLatest.get(i) ? COL_MSG : COL_MSG_DIM);
                 g.setBackgroundColor(BG);
-                g.putString(rc, row++, clip(msgs[i], rw));
+                g.putString(rc, row++, displayLines.get(i));
             }
         }
     }
@@ -848,5 +861,41 @@ public class Renderer {
     /** Clips a string to the given maximum column width. */
     private static String clip(String s, int maxWidth) {
         return s.length() <= maxWidth ? s : s.substring(0, maxWidth);
+    }
+
+    /**
+     * Wraps {@code text} into lines of at most {@code maxWidth} characters,
+     * breaking at word boundaries where possible.
+     *
+     * Continuation lines are indented by the width of the timestamp prefix
+     * ({@code "[HH:MM:SS] "} = 11 characters) so wrapped text aligns with
+     * the start of the message body rather than the left edge of the panel.
+     */
+    private static List<String> wordWrap(String text, int maxWidth) {
+        List<String> lines = new ArrayList<>();
+        if (maxWidth <= 0) { lines.add(text); return lines; }
+        if (text.length() <= maxWidth) { lines.add(text); return lines; }
+
+        // Length of "[HH:MM:SS] " prefix — continuation lines indent to match.
+        final int INDENT = 11;
+        final String pad = " ".repeat(Math.min(INDENT, maxWidth / 2));
+
+        // First line uses the full width; subsequent lines are indented.
+        String remaining = text;
+        boolean first = true;
+        while (!remaining.isEmpty()) {
+            int limit = first ? maxWidth : Math.max(1, maxWidth - pad.length());
+            if (remaining.length() <= limit) {
+                lines.add(first ? remaining : pad + remaining);
+                break;
+            }
+            int split = remaining.lastIndexOf(' ', limit);
+            if (split <= 0) split = limit;
+            lines.add(first ? remaining.substring(0, split)
+                             : pad + remaining.substring(0, split));
+            remaining = remaining.substring(split).stripLeading();
+            first = false;
+        }
+        return lines;
     }
 }

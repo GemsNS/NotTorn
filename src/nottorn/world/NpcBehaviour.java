@@ -36,6 +36,16 @@ public final class NpcBehaviour {
 
     private static final Random RNG = new Random();
 
+    /**
+     * Locations where hostile NPCs cannot initiate or continue combat.
+     * NPCs may still physically wander into these areas, but they will never
+     * transition to CHASE or COMBAT while the player is standing in one.
+     * A chasing NPC that follows the player into a safe zone gives up and
+     * returns to IDLE rather than attacking.
+     */
+    private static final java.util.Set<String> SAFE_LOCATIONS =
+            java.util.Set.of("CITY_CENTER");
+
     private NpcBehaviour() { }
 
     public static void tick(Npc npc, WorldMap world,
@@ -55,7 +65,8 @@ public final class NpcBehaviour {
     // ── State handlers ────────────────────────────────────────────────────────
 
     private static void tickIdle(Npc npc, WorldMap world, String playerLoc) {
-        if (canEngage(npc) && playerLoc.equals(npc.getCurrentLocationId())) {
+        if (canEngage(npc) && playerLoc.equals(npc.getCurrentLocationId())
+                && !SAFE_LOCATIONS.contains(playerLoc)) {
             npc.setState(NpcState.CHASE);
             return;
         }
@@ -66,7 +77,8 @@ public final class NpcBehaviour {
     }
 
     private static void tickPatrol(Npc npc, WorldMap world, String playerLoc) {
-        if (canEngage(npc) && playerLoc.equals(npc.getCurrentLocationId())) {
+        if (canEngage(npc) && playerLoc.equals(npc.getCurrentLocationId())
+                && !SAFE_LOCATIONS.contains(playerLoc)) {
             npc.setState(NpcState.CHASE);
             return;
         }
@@ -85,8 +97,12 @@ public final class NpcBehaviour {
     }
 
     private static void tickChase(Npc npc, WorldMap world, String playerLoc) {
-        // Player is right here → initiate combat flag
+        // Player is right here → initiate combat, unless this is a safe zone
         if (playerLoc.equals(npc.getCurrentLocationId())) {
+            if (SAFE_LOCATIONS.contains(playerLoc)) {
+                npc.setState(NpcState.IDLE);
+                return;
+            }
             npc.setState(NpcState.COMBAT);
             return;
         }
